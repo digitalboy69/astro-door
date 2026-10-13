@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow"><meta name="color-scheme" content="dark"><title>Admin · Vedic Astro Suite</title>
+<style>
+:root{--bg:#070a12;--p:#0f1422;--p2:#161c2f;--ln:rgba(255,255,255,.1);--tx:#e9ecf5;--mut:#98a0b6;--gold:#f2d675;--g2:#d4af37;--ok:#3ecf8e;--warn:#f5b84b;--bad:#ff6b6b;--blue:#6aa7ff}
+*{box-sizing:border-box;margin:0;padding:0}html,body{background:var(--bg);color:var(--tx);font:14px/1.45 Inter,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}input,select,textarea{font:inherit;color:inherit}
+.hide{display:none!important}
+.wrap{max-width:1100px;margin:0 auto;padding:16px 14px 80px}
+header{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:6px 0 14px}
+header h1{font:700 18px Georgia,serif;color:var(--gold);letter-spacing:.04em}header small{color:var(--mut)}
+.btn{border:1px solid var(--ln);background:var(--p2);padding:9px 14px;border-radius:11px;font-weight:600;font-size:13px;transition:background .15s,transform .1s}
+.btn:hover{background:#1d2540}.btn:active{transform:scale(.97)}.btn:disabled{opacity:.5;cursor:default}
+.btn.pri{background:linear-gradient(135deg,#f2d675,var(--g2));color:#1a1405;border:0}
+.btn.bad{color:#ffb0b0;border-color:rgba(255,107,107,.4)}.btn.ok{color:#aef3d4;border-color:rgba(62,207,142,.4)}
+.tabs{display:flex;gap:6px;overflow:auto;padding-bottom:4px;margin-bottom:14px}.tabs button{border:0;background:transparent;color:var(--mut);padding:9px 14px;border-radius:10px;font-weight:600;white-space:nowrap}.tabs button.on{background:var(--p2);color:var(--tx);box-shadow:inset 0 0 0 1px var(--ln)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}
+.stat{background:var(--p);border:1px solid var(--ln);border-radius:14px;padding:12px 14px}.stat b{display:block;font:700 22px Georgia,serif}.stat span{color:var(--mut);font-size:12px}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.bar input[type=search],.in{background:var(--p);border:1px solid var(--ln);border-radius:11px;padding:9px 12px;outline:0;min-width:0}.bar input[type=search]{flex:1;min-width:180px}.in:focus,.bar input:focus{border-color:var(--gold)}
+.chips{display:flex;gap:6px;flex-wrap:wrap}.chip{border:1px solid var(--ln);background:var(--p);padding:6px 11px;border-radius:99px;font-size:12.5px;color:var(--mut)}.chip.on{background:var(--gold);color:#1a1405;border-color:var(--gold);font-weight:700}
+.list{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr .8fr;gap:10px;align-items:center;background:var(--p);border:1px solid var(--ln);border-radius:13px;padding:11px 14px;cursor:pointer;transition:border-color .15s}
+.row:hover{border-color:rgba(242,214,117,.5)}
+.row .em{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.row .sm{color:var(--mut);font-size:12px}
+.badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:11.5px;font-weight:700}
+.b-active{background:rgba(62,207,142,.15);color:var(--ok)}.b-pending{background:rgba(245,184,75,.15);color:var(--warn)}.b-blocked{background:rgba(255,107,107,.15);color:var(--bad)}.b-lifetime{background:rgba(242,214,117,.18);color:var(--gold)}.b-expired{background:rgba(152,160,182,.18);color:var(--mut)}
+@media(max-width:720px){.row{grid-template-columns:1fr auto;gap:4px 10px}.row .c3,.row .c4,.row .c5{display:none}}
+.card{background:var(--p);border:1px solid var(--ln);border-radius:16px;padding:16px;margin-bottom:12px}.card h3{font:700 15px Georgia,serif;color:var(--gold);margin-bottom:10px}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}.fg label{display:flex;flex-direction:column;gap:5px;color:var(--mut);font-size:12px}.fg .in{color:var(--tx);font-size:14px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--ln);font-size:13px}th{color:var(--mut);font-weight:600;font-size:12px}.tw{overflow:auto}
+/* drawer */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:20;display:none}.ov.on{display:block}
+.dr{position:fixed;z-index:21;background:var(--bg);border-left:1px solid var(--ln);top:0;right:0;bottom:0;width:min(460px,100%);overflow:auto;padding:16px;transform:translateX(100%);transition:transform .25s}.dr.on{transform:none}
+@media(max-width:720px){.dr{top:auto;height:88vh;width:100%;border-left:0;border-top:1px solid var(--ln);border-radius:18px 18px 0 0;transform:translateY(100%)}}
+.dr h2{font:700 16px Georgia,serif;margin-bottom:2px;word-break:break-all}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.tg{display:flex;align-items:center;gap:9px;padding:8px 0}.tg input{width:18px;height:18px;accent-color:var(--g2)}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1d2540;border:1px solid var(--ln);padding:10px 16px;border-radius:12px;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw}.toast.on{opacity:1}.toast.err{border-color:var(--bad);color:#ffb0b0}
+.login{max-width:380px;margin:12vh auto 0}.login .card{padding:22px}
+.mut{color:var(--mut);font-size:12.5px}
+.dz{border:2px dashed var(--ln);border-radius:14px;padding:22px;text-align:center;color:var(--mut)}
+</style></head><body>
+<div class="wrap">
+  <!-- LOGIN -->
+  <div id="lg" class="login">
+    <div class="card"><h3>Admin sign in</h3>
+      <div class="fg" style="grid-template-columns:1fr"><label>Email<input class="in" id="em" type="email" autocomplete="email"></label><label>Password<input class="in" id="pw" type="password" autocomplete="current-password"></label></div>
+      <p class="mut" id="lgMsg" style="margin:10px 0"></p><button class="btn pri" id="lgGo" style="width:100%">Sign in</button>
+    </div>
+    <p class="mut" style="text-align:center">Private page · keep this file on your computer only.</p>
+  </div>
+
+  <!-- APP -->
+  <div id="ap" class="hide">
+    <header><div><h1>✦ Admin</h1><small id="who"></small></div><div><button class="btn" id="refresh">↻ Refresh</button> <button class="btn" id="out">Sign out</button></div></header>
+    <div class="tabs" id="tabs"><button data-t="cu" class="on">Customers</button><button data-t="pa">Payments</button><button data-t="se">Settings</button><button data-t="up">App update</button></div>
+
+    <section id="t-cu">
+      <div class="stats" id="stats"></div>
+      <div class="bar"><input type="search" id="q" placeholder="Search email or brand…"><div class="chips" id="chips"></div></div>
+      <div class="list" id="list"></div>
+    </section>
+    <section id="t-pa" class="hide"><div class="card tw"><table><thead><tr><th>Date</th><th>Customer</th><th>Amount</th><th>Status</th><th>Payment ID</th></tr></thead><tbody id="pbody"></tbody></table></div></section>
+    <section id="t-se" class="hide">
+      <div class="card"><h3>Price &amp; plan</h3><div class="fg">
+        <label>Price (₹)<input class="in" id="sPrice" type="number" min="1" step="1"></label>
+        <label>Validity (days)<input class="in" id="sDays" type="number" min="1" step="1"></label>
+        <label>Product name<input class="in" id="sName" maxlength="60"></label>
+        <label>Your WhatsApp (with country code)<input class="in" id="sWa" placeholder="918919748693"></label>
+      </div>
+      <div class="tg"><input type="checkbox" id="sSignup"><label for="sSignup">Allow new sign-ups</label></div>
+      <button class="btn pri" id="sSave">Save settings</button>
+      <p class="mut" style="margin-top:8px">New price applies to the next payment. People who already paid keep their dates.</p></div>
+    </section>
+    <section id="t-up" class="hide">
+      <div class="card"><h3>Publish app update</h3>
+        <p class="mut" id="upInfo" style="margin-bottom:10px">Checking current version…</p>
+        <div class="dz"><p style="margin-bottom:10px">Choose <b>customer-edition.html</b> (built by <code>tools_customer.py</code>)</p><input type="file" id="upFile" accept=".html,text/html"></div>
+        <p class="mut" id="upMsg" style="margin:10px 0"></p>
+        <button class="btn pri" id="upGo" disabled>Publish to all customers</button>
+        <p class="mut" style="margin-top:8px">The previous version is backed up automatically. Customers get the new version the next time they open the app.</p></div>
+    </section>
+  </div>
+</div>
+
+<div class="ov" id="ov"></div>
+<aside class="dr" id="dr"></aside>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  var SB='https://pbnfpbugxcndmrgpuved.supabase.co', KEY='sb_publishable_dpTL2lYOd1qirgYXR2P-9Q_WK18oZIV', SK='vax_admin_session';
+  var $=function(i){return document.getElementById(i)}, sess=null, M=[], P=[], S={}, filt='all', sel=null;
+  try{ sess=JSON.parse(localStorage.getItem(SK)||'null'); }catch(e){}
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]}); }
+  function toast(t,err){ var e=$('toast'); e.textContent=t; e.className='toast on'+(err?' err':''); clearTimeout(toast.t); toast.t=setTimeout(function(){ e.className='toast'+(err?' err':''); },2600); }
+  function save(s){ sess=s; try{ s?localStorage.setItem(SK,JSON.stringify(s)):localStorage.removeItem(SK); }catch(e){} }
+  function http(url,o){ return fetch(url,o).then(function(r){ return r.text().then(function(t){ var j; try{ j=t?JSON.parse(t):null; }catch(e){ j=t; } if(!r.ok){ var e=new Error((j&&(j.message||j.msg||j.error_description||j.error))||('HTTP '+r.status)); e.status=r.status; throw e; } return j; }); }); }
+  function tok(){
+    if(!sess) return Promise.reject(new Error('login'));
+    if(sess.expires_at*1000-Date.now()>60000) return Promise.resolve(sess.access_token);
+    return http(SB+'/auth/v1/token?grant_type=refresh_token',{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({refresh_token:sess.refresh_token})}).then(function(j){ save({access_token:j.access_token,refresh_token:j.refresh_token,expires_at:j.expires_at||Math.floor(Date.now()/1000)+3600,email:sess.email}); return sess.access_token; });
+  }
+  function rpc(name,body){ return tok().then(function(t){ return http(SB+'/rest/v1/rpc/'+name,{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify(body||{})}); }); }
+  var inr=function(p){ return '₹'+(Number(p||0)/100).toLocaleString('en-IN',{maximumFractionDigits:2}); };
+  var dt=function(s){ return s?new Date(s).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'}):'—'; };
+
+  /* ---- login ---- */
+  function showLogin(msg){ $('lg').classList.remove('hide'); $('ap').classList.add('hide'); $('lgMsg').textContent=msg||''; }
+  $('lgGo').onclick=function(){
+    var b=$('lgGo'); b.disabled=true; $('lgMsg').textContent='';
+    http(SB+'/auth/v1/token?grant_type=password',{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json'},body:JSON.stringify({email:$('em').value.trim(),password:$('pw').value})})
+    .then(function(j){ save({access_token:j.access_token,refresh_token:j.refresh_token,expires_at:j.expires_at||Math.floor(Date.now()/1000)+3600,email:(j.user&&j.user.email)||$('em').value.trim()}); return boot(); })
+    .catch(function(e){ showLogin(/invalid/i.test(e.message)?'Wrong email or password.':e.message); }).then(function(){ b.disabled=false; });
+  };
+  $('pw').addEventListener('keydown',function(e){ if(e.key==='Enter') $('lgGo').click(); });
+  $('out').onclick=function(){ save(null); showLogin(); };
+
+  function boot(){
+    return rpc('is_admin').then(function(ok){
+      if(ok!==true){ save(null); return showLogin('This account is not an admin.'); }
+      $('lg').classList.add('hide'); $('ap').classList.remove('hide'); $('who').textContent=sess.email; return loadAll();
+    }).catch(function(e){ showLogin(e.message==='login'?'':e.message); });
+  }
+  function loadAll(){
+    return Promise.all([rpc('admin_members'),rpc('admin_list_payments',{p_limit:300}),rpc('public_settings')]).then(function(r){ M=r[0]||[]; P=r[1]||[]; S=r[2]||{}; renderAll(); }).catch(function(e){ if(e.status===401||e.message==='login'){ save(null); showLogin('Session ended. Sign in again.'); } else toast(e.message,true); });
+  }
+  $('refresh').onclick=function(){ loadAll().then(function(){ toast('Refreshed'); }); };
+
+  /* ---- tabs ---- */
+  $('tabs').addEventListener('click',function(e){ var t=e.target.getAttribute('data-t'); if(!t) return; [].forEach.call($('tabs').children,function(b){ b.classList.toggle('on',b===e.target); }); ['cu','pa','se','up'].forEach(function(x){ $('t-'+x).classList.toggle('hide',x!==t); }); if(t==='up') checkApp(); });
+
+  /* ---- customers ---- */
+  function state(m){ if(m.status==='blocked') return 'blocked'; if(m.status==='active'){ if(m.plan==='lifetime') return 'lifetime'; if(m.expires_at&&new Date(m.expires_at)<new Date()) return 'expired'; return 'active'; } return 'pending'; }
+  var LBL={active:'Active',pending:'Not paid',blocked:'Blocked',lifetime:'Lifetime',expired:'Expired'};
+  function renderAll(){ renderStats(); renderChips(); renderList(); renderPay(); renderSettings(); }
+  function renderStats(){
+    var c={active:0,pending:0,blocked:0,lifetime:0,expired:0,soon:0}, rev=0, now=Date.now();
+    M.forEach(function(m){ var s=state(m); c[s]++; rev+=Number(m.paid_total||0); if(s==='active'&&m.expires_at&&new Date(m.expires_at)-now<30*864e5) c.soon++; });
+    $('stats').innerHTML=[['Customers',M.length],['Active',c.active+c.lifetime],['Not paid',c.pending],['Expiring ≤30d',c.soon],['Blocked',c.blocked],['Revenue',inr(rev)]].map(function(x){ return '<div class="stat"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'; }).join('');
+  }
+  function renderChips(){ $('chips').innerHTML=['all','active','lifetime','pending','expired','blocked'].map(function(k){ return '<button class="chip'+(filt===k?' on':'')+'" data-f="'+k+'">'+(k==='all'?'All':LBL[k])+'</button>'; }).join(''); }
+  $('chips').addEventListener('click',function(e){ var f=e.target.getAttribute('data-f'); if(f){ filt=f; renderChips(); renderList(); } });
+  $('q').addEventListener('input',renderList);
+  function renderList(){
+    var q=$('q').value.trim().toLowerCase();
+    var rows=M.filter(function(m){ return (filt==='all'||state(m)===filt)&&(!q||(m.email||'').toLowerCase().indexOf(q)>=0||(m.brand_name||'').toLowerCase().indexOf(q)>=0); });
+    $('list').innerHTML=rows.length?rows.map(function(m){ var s=state(m); return '<div class="row" data-u="'+esc(m.user_id)+'"><div><div class="em">'+esc(m.email)+'</div><div class="sm">'+esc(m.brand_name||'No brand yet')+'</div></div><div><span class="badge b-'+s+'">'+LBL[s]+'</span></div><div class="c3 sm">'+(m.plan==='lifetime'?'Never expires':'Until '+dt(m.expires_at))+'</div><div class="c4 sm">Joined '+dt(m.created_at)+'</div><div class="c5 sm">'+inr(m.paid_total)+'</div></div>'; }).join(''):'<p class="mut">No customers match.</p>';
+  }
+  $('list').addEventListener('click',function(e){ var r=e.target.closest('.row'); if(r) openDrawer(r.getAttribute('data-u')); });
+
+  /* ---- drawer ---- */
+  function closeDrawer(){ $('dr').classList.remove('on'); $('ov').classList.remove('on'); sel=null; }
+  $('ov').onclick=closeDrawer;
+  function openDrawer(id){
+    var m=M.filter(function(x){return x.user_id===id})[0]; if(!m) return; sel=id; var s=state(m), f=m.features||{};
+    var sw=['#d4a24a','#e0584b','#3aa0ff','#2fbf9a','#9b6bff','#e8639b'];
+    $('dr').innerHTML='<div style="display:flex;justify-content:space-between;gap:8px"><div><h2>'+esc(m.email)+'</h2><span class="badge b-'+s+'">'+LBL[s]+'</span> <span class="mut">'+(m.plan==='lifetime'?'Never expires':'Until '+dt(m.expires_at))+' · paid '+inr(m.paid_total)+(m.last_paid?' · last '+dt(m.last_paid):'')+'</span></div><button class="btn" id="dClose">✕</button></div>'
+    +'<div class="card" style="margin-top:12px"><h3>Access</h3><div class="acts">'
+    +'<button class="btn pri" data-a="lifetime">★ Give lifetime</button>'
+    +(m.status==='blocked'?'<button class="btn ok" data-a="unblock">Unblock</button>':'<button class="btn bad" data-a="block">Block</button>')
+    +'<button class="btn" data-a="reset">Reset to not paid</button></div>'
+    +'<div class="acts"><input class="in" id="dDays" type="number" min="1" value="'+esc(S.validity_days||365)+'" style="width:90px"><button class="btn" data-a="extend">Extend by days</button></div>'
+    +'<label class="mut">Private note</label><input class="in" id="dNote" style="width:100%;margin:5px 0 8px" value="'+esc(m.note||'')+'" placeholder="e.g. paid by UPI, friend of …"><button class="btn" id="dNoteSave">Save note</button></div>'
+    +'<div class="card"><h3>Brand</h3><div class="fg" style="grid-template-columns:1fr">'
+    +'<label>Brand name<input class="in" id="dBn" maxlength="60" value="'+esc(m.brand_name)+'"></label><label>Tagline<input class="in" id="dBt" maxlength="120" value="'+esc(m.brand_tagline)+'"></label><label>Phone<input class="in" id="dBp" maxlength="30" value="'+esc(m.brand_phone)+'"></label>'
+    +'<label>Accent<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap" id="dSw">'+sw.map(function(c){ return '<button type="button" data-c="'+c+'" style="width:28px;height:28px;border-radius:50%;border:2px solid '+(m.brand_accent.toLowerCase()===c?'#fff':'transparent')+';background:'+c+'"></button>'; }).join('')+'<input type="color" id="dBa" value="'+esc(m.brand_accent)+'" style="width:34px;height:28px;border:0;background:none"></div></label></div>'
+    +'<div class="tg"><input type="checkbox" id="dLock"'+(m.brand_locked?' checked':'')+'><label for="dLock">Lock brand (customer can’t change it)</label></div>'
+    +'<div class="tg"><input type="checkbox" id="dClr"><label for="dClr">Remove their logo</label></div><button class="btn pri" id="dBrand">Save brand</button></div>'
+    +'<div class="card"><h3>Features for this customer</h3>'
+    +[['sky','3D Sky tab'],['notes','Notepad tab'],['share','QR / link sharing']].map(function(x){ return '<div class="tg"><input type="checkbox" data-ft="'+x[0]+'"'+(f[x[0]]===false?'':' checked')+' id="ft_'+x[0]+'"><label for="ft_'+x[0]+'">'+x[1]+'</label></div>'; }).join('')
+    +'<button class="btn" id="dFeat">Save features</button></div>';
+    $('dr').classList.add('on'); $('ov').classList.add('on');
+  }
+  $('dr').addEventListener('click',function(e){
+    var t=e.target, id=sel; if(!id) return;
+    if(t.id==='dClose') return closeDrawer();
+    if(t.getAttribute('data-c')){ var c=t.getAttribute('data-c'); $('dBa').value=c; [].forEach.call($('dSw').querySelectorAll('button'),function(b){ b.style.borderColor=b===t?'#fff':'transparent'; }); return; }
+    var a=t.getAttribute('data-a');
+    if(a){
+      var msgs={lifetime:'Give lifetime access?',block:'Block this customer?',reset:'Reset to not paid? They will need to pay again.'};
+      if(msgs[a]&&!confirm(msgs[a])) return;
+      return act(rpc('admin_member_action',{p_user:id,p_action:a,p_days:Number($('dDays').value)||365}),'Done');
+    }
+    if(t.id==='dNoteSave') return act(rpc('admin_set_note',{p_user:id,p_note:$('dNote').value}),'Note saved');
+    if(t.id==='dBrand') return act(rpc('admin_set_brand',{p_user:id,p_name:$('dBn').value,p_tagline:$('dBt').value,p_phone:$('dBp').value,p_accent:$('dBa').value,p_locked:$('dLock').checked,p_clear_logo:$('dClr').checked}),'Brand saved');
+    if(t.id==='dFeat'){ var f={}; [].forEach.call($('dr').querySelectorAll('[data-ft]'),function(c){ if(!c.checked) f[c.getAttribute('data-ft')]=false; }); return act(rpc('admin_set_features',{p_user:id,p_features:f}),'Features saved'); }
+  });
+  function act(p,ok){ return p.then(function(){ toast(ok); var id=sel; return loadAll().then(function(){ if(id&&$('dr').classList.contains('on')) openDrawer(id); }); }).catch(function(e){ toast(e.message,true); }); }
+
+  /* ---- payments ---- */
+  function renderPay(){ $('pbody').innerHTML=P.length?P.map(function(p){ var c=p.status==='paid'?'b-active':p.status==='refunded'?'b-expired':p.status==='failed'?'b-blocked':'b-pending'; return '<tr><td>'+dt(p.paid_at||p.created_at)+'</td><td>'+esc(p.email||'—')+'</td><td>'+inr(p.amount_paise)+'</td><td><span class="badge '+c+'">'+esc(p.status)+'</span></td><td class="mut">'+esc(p.payment_id||p.order_id)+'</td></tr>'; }).join(''):'<tr><td colspan="5" class="mut">No payments yet.</td></tr>'; }
+
+  /* ---- settings ---- */
+  function renderSettings(){ $('sPrice').value=(Number(S.price_paise||0)/100); $('sDays').value=S.validity_days||365; $('sName').value=S.product_name||''; $('sWa').value=S.whatsapp||''; $('sSignup').checked=S.allow_signup!==false; }
+  $('sSave').onclick=function(){
+    var price=Math.round(Number($('sPrice').value)*100), days=Math.round(Number($('sDays').value));
+    if(!(price>=100)) return toast('Price must be at least ₹1',true); if(!(days>=1)) return toast('Validity must be at least 1 day',true);
+    Promise.all([rpc('admin_set_setting',{p_key:'price_paise',p_value:price}),rpc('admin_set_setting',{p_key:'validity_days',p_value:days}),rpc('admin_set_setting',{p_key:'product_name',p_value:$('sName').value.trim()||'Vedic Astro Suite'}),rpc('admin_set_setting',{p_key:'whatsapp',p_value:$('sWa').value.replace(/\D/g,'')}),rpc('admin_set_setting',{p_key:'allow_signup',p_value:$('sSignup').checked})])
+    .then(function(){ toast('Settings saved'); return loadAll(); }).catch(function(e){ toast(e.message,true); });
+  };
+
+  /* ---- app update ---- */
+  function checkApp(){
+    tok().then(function(t){ return http(SB+'/storage/v1/object/list/app',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+t,'Content-Type':'application/json'},body:JSON.stringify({prefix:'',limit:100,sortBy:{column:'updated_at',order:'desc'}})}); })
+    .then(function(l){ var c=(l||[]).filter(function(x){return x.name==='current.html'})[0]; $('upInfo').textContent=c?('Live version: '+Math.round((c.metadata&&c.metadata.size||0)/1024)+' KB · published '+new Date(c.updated_at).toLocaleString('en-GB')):'No app published yet. Customers see “Updating the app” until you publish.'; })
+    .catch(function(e){ $('upInfo').textContent='Could not check: '+e.message; });
+  }
+  var upText=null;
+  $('upFile').onchange=function(){
+    var f=this.files&&this.files[0]; upText=null; $('upGo').disabled=true; if(!f) return;
+    f.text().then(function(t){
+      if(t.indexOf('vcxBrand')<0||/data-act="dev"/.test(t)){ $('upMsg').textContent='⚠ This does not look like the customer edition. Use customer-edition.html from tools_customer.py.'; return; }
+      upText=t; $('upMsg').textContent=f.name+' · '+Math.round(f.size/1024)+' KB · ready'; $('upGo').disabled=false;
+    });
+  };
+  $('upGo').onclick=function(){
+    if(!upText) return; if(!confirm('Publish this version to ALL customers now?')) return;
+    var b=$('upGo'); b.disabled=true; $('upMsg').textContent='Backing up and uploading…';
+    var ts=new Date().toISOString().replace(/[:.]/g,'-');
+    tok().then(function(t){
+      var h={apikey:KEY,Authorization:'Bearer '+t};
+      return http(SB+'/storage/v1/object/copy',{method:'POST',headers:Object.assign({'Content-Type':'application/json'},h),body:JSON.stringify({bucketId:'app',sourceKey:'current.html',destinationKey:'backup-'+ts+'.html'})}).catch(function(){})
+      .then(function(){ return http(SB+'/storage/v1/object/app/current.html',{method:'POST',headers:Object.assign({'Content-Type':'text/html','x-upsert':'true'},h),body:upText}); });
+    }).then(function(){ toast('Published ✓'); $('upMsg').textContent='Published.'; checkApp(); }).catch(function(e){ toast(e.message,true); $('upMsg').textContent='Failed: '+e.message; }).then(function(){ b.disabled=false; });
+  };
+
+  if(sess) boot(); else showLogin();
+})();
+</script></body></html>

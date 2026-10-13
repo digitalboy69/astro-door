@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex"><meta name="theme-color" content="#03060d">
+<title>Vedic Astro Suite</title>
+<style>
+:root{--gold:#d4af37;--gold2:#f9d976;--bg:#03060d;--tx:#eae6df;--mut:#9f9a8f;--line:rgba(255,255,255,.14)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%;background:var(--bg);color:var(--tx);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body{display:grid;place-items:center;padding:18px;min-height:100vh;min-height:100dvh;background:radial-gradient(60% 45% at 50% 0%,rgba(123,110,246,.22),transparent 70%),radial-gradient(50% 40% at 100% 90%,rgba(0,240,213,.08),transparent 70%),var(--bg)}
+.stars{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(1.2px 1.2px at 12% 18%,#fff8,transparent),radial-gradient(1px 1px at 70% 12%,#fff6,transparent),radial-gradient(1.4px 1.4px at 84% 62%,#fff7,transparent),radial-gradient(1px 1px at 28% 78%,#fff6,transparent),radial-gradient(1.2px 1.2px at 52% 40%,#fff5,transparent)}
+.card{position:relative;width:100%;max-width:420px;padding:28px 22px 20px;border-radius:28px;text-align:center;background:linear-gradient(180deg,rgba(20,26,44,.92),rgba(11,14,26,.94));border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.07);animation:up .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes up{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+.om{width:68px;height:68px;margin:0 auto 12px;display:grid;place-items:center;font-size:32px;border-radius:50%;color:#1a1405;background:radial-gradient(circle at 30% 25%,#fff3c4,var(--gold2) 45%,#8c7323);box-shadow:0 8px 30px rgba(212,175,55,.35)}
+h1{font:700 20px Georgia,"Times New Roman",serif;letter-spacing:.1em;background:linear-gradient(90deg,#8c7323,#fff3c4,var(--gold2),#8c7323);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.sub{margin-top:6px;font-size:13.5px;color:var(--mut);line-height:1.5}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin:18px 0 14px;border-radius:14px;background:rgba(255,255,255,.06)}
+.tabs button{border:0;background:transparent;color:inherit;padding:10px;border-radius:11px;font:600 13px inherit;cursor:pointer;opacity:.65;transition:all .2s}
+.tabs button.on{background:linear-gradient(135deg,#f2d675,var(--gold));color:#1a1405;opacity:1}
+form,.fm{display:flex;flex-direction:column;gap:12px;text-align:left}
+label,.lab{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--mut)}
+input[type=text],input[type=email],input[type=password],input[type=tel]{padding:13px 14px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:inherit;font-size:16px;font-family:inherit;outline:0;transition:border-color .2s,box-shadow .2s}
+input:focus{border-color:rgba(249,217,118,.8);box-shadow:0 0 0 4px rgba(212,175,55,.16)}
+input:disabled{opacity:.55}
+.go{margin-top:2px;border:0;border-radius:14px;padding:14px;font:700 15px inherit;color:#1a1405;cursor:pointer;background:linear-gradient(135deg,#f2d675,var(--gold));box-shadow:0 8px 24px rgba(212,175,55,.28);transition:transform .15s,opacity .2s;width:100%}
+.go:active{transform:scale(.97)}.go:disabled{opacity:.6;cursor:default}
+.ghost{margin-top:8px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:var(--tx);border-radius:14px;padding:12px;font:600 14px inherit;cursor:pointer;width:100%}
+.msg{padding:10px 12px;border-radius:12px;font-size:13px;background:rgba(255,120,120,.12);border:1px solid rgba(255,120,120,.3);color:#ffb0b0;text-align:left}
+.msg.ok{background:rgba(94,196,183,.12);border-color:rgba(94,196,183,.4);color:#aef3e6}
+.lnk{margin-top:12px;border:0;background:none;color:#e7c766;font:13px inherit;cursor:pointer;text-decoration:underline}
+.note{margin-top:14px;font-size:12px;color:var(--mut);line-height:1.5}
+.note a{color:#e7c766}
+.price{margin:16px 0 4px;font:700 44px Georgia,serif;color:var(--gold2)}
+.price small{display:block;font:500 13px Inter,sans-serif;color:var(--mut);margin-top:2px}
+.perks{list-style:none;margin:14px 0 16px;text-align:left;display:grid;gap:8px}
+.perks li{font-size:13.5px;padding-left:26px;position:relative;color:#d9d4c8}
+.perks li:before{content:"✓";position:absolute;left:0;top:0;width:19px;height:19px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;color:#1a1405;background:linear-gradient(135deg,#f2d675,var(--gold))}
+.share{margin-top:12px;padding:9px 12px;border-radius:12px;font-size:12.5px;background:rgba(212,175,55,.12);border:1px solid rgba(212,175,55,.35);color:var(--gold2)}
+.load{position:fixed;inset:0;z-index:5;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--bg)}
+.load.show{display:flex}
+.orb{width:84px;height:84px;border-radius:50%;border:2px solid rgba(212,175,55,.25);border-top-color:var(--gold2);animation:sp 1.1s linear infinite;display:grid;place-items:center;font-size:30px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.orb span{animation:sp 1.1s linear infinite reverse;display:block}
+.load b{letter-spacing:.2em;font-size:13px}.load small{color:var(--mut);font-size:12.5px}
+.wa{display:block;margin-top:14px;padding:13px;border-radius:14px;text-decoration:none;font-weight:700;color:#fff;background:linear-gradient(135deg,#0f9d58,#25d366);box-shadow:0 8px 24px rgba(37,211,102,.25)}
+.hide{display:none!important}
+/* brand editor */
+.prev{display:flex;align-items:center;gap:9px;justify-content:center;margin:14px auto 4px;padding:7px 15px 7px 8px;width:max-content;max-width:100%;border-radius:999px;background:rgba(10,14,24,.8);border:1px solid var(--line);font:600 13px inherit}
+.prev img,.prev i{width:28px;height:28px;border-radius:50%;object-fit:cover;flex:none;background:rgba(255,255,255,.1);display:block}
+.prev span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prevt{font-size:12px;color:var(--mut);text-align:center;margin-bottom:6px}
+.row{display:flex;gap:10px;align-items:center}
+.sw{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sw button{width:30px;height:30px;border-radius:50%;border:2px solid transparent;cursor:pointer;outline:0}
+.sw button.on{border-color:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.2)}
+.sw input[type=color]{width:34px;height:30px;border:0;background:none;padding:0;cursor:pointer}
+.logo{display:flex;align-items:center;gap:12px}
+.logo .ph{width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.08) center/cover;display:grid;place-items:center;font-size:20px;flex:none}
+.logo button{border:1px solid var(--line);background:rgba(255,255,255,.06);color:inherit;border-radius:11px;padding:9px 12px;font:600 12.5px inherit;cursor:pointer}
+@media(max-width:380px){.card{padding:24px 16px 18px}.price{font-size:38px}}
+</style></head><body>
+<div class="stars"></div>
+
+<!-- LOGIN -->
+<div class="card" id="login">
+  <div class="om">ॐ</div>
+  <h1 class="pname">VEDIC ASTRO SUITE</h1>
+  <p class="sub">Sign in to open your charts, planets and tools.</p>
+  <div class="share hide" id="shared">🔗 A chart was shared with you. Sign in to open it.</div>
+  <div class="tabs"><button type="button" id="tIn" class="on">Sign in</button><button type="button" id="tUp">Create account</button></div>
+  <form id="f" novalidate>
+    <label>Email<input id="em" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com"></label>
+    <label>Password<input id="pw" type="password" autocomplete="current-password" placeholder="At least 6 characters"></label>
+    <div class="msg hide" id="msg"></div>
+    <button class="go" id="go" type="submit">Sign in</button>
+  </form>
+  <button class="lnk" id="forgot" type="button">Forgot password?</button>
+  <p class="note" id="legalNote">By creating an account you agree to the <a href="legal.html#terms" target="_blank">Terms</a>, <a href="legal.html#privacy" target="_blank">Privacy</a> and <a href="legal.html#refund" target="_blank">Refund</a> policy.</p>
+</div>
+
+<!-- PAY -->
+<div class="card hide" id="pay">
+  <div class="om">✦</div>
+  <h1 class="pname">VEDIC ASTRO SUITE</h1>
+  <p class="sub" id="payWhy">Unlock the full suite for your practice.</p>
+  <div class="price" id="priceBox">₹—<small id="priceSub"></small></div>
+  <ul class="perks">
+    <li>Birth chart, dashas, yogas, strengths &amp; matching</li>
+    <li>3D sky view and a notepad for your clients</li>
+    <li>Smart search, reports and exports</li>
+    <li>Your own brand name, logo and colours</li>
+  </ul>
+  <div class="msg hide" id="payMsg"></div>
+  <button class="go" id="payBtn" type="button">Pay securely</button>
+  <a class="wa hide" id="payWa" target="_blank" rel="noopener">💬 Need help? WhatsApp</a>
+  <p class="note">🔒 Payment by Razorpay (UPI, cards, netbanking). We never see your card details.<br><a href="legal.html#refund" target="_blank">Refund policy</a></p>
+  <button class="lnk" id="payOut" type="button">Sign out</button>
+</div>
+
+<!-- BRAND -->
+<div class="card hide" id="brand">
+  <div class="om">🪔</div>
+  <h1>YOUR BRAND</h1>
+  <p class="sub" id="brSub">This appears on your reports and inside the app.</p>
+  <div class="prevt">Preview</div>
+  <div class="prev" id="prev"><i id="pvLogo"></i><span id="pvName">Your name</span></div>
+  <div class="fm" style="margin-top:12px">
+    <label>Brand / practice name<input id="bName" type="text" maxlength="60" placeholder="e.g. Acharya Sharma Jyotish"></label>
+    <label>Tagline (optional)<input id="bTag" type="text" maxlength="120" placeholder="e.g. Vedic guidance since 2005"></label>
+    <label>Phone / WhatsApp (optional)<input id="bPhone" type="tel" maxlength="30" placeholder="+91 …"></label>
+    <div class="lab">Accent colour<div class="sw" id="bSw"></div></div>
+    <div class="lab">Logo (optional)<div class="logo"><div class="ph" id="bPh">🖼</div><div><button type="button" id="bPick">Choose image</button> <button type="button" id="bClr">Remove</button></div></div></div>
+    <input type="file" id="bFile" accept="image/png,image/jpeg,image/webp" class="hide">
+    <div class="msg hide" id="brMsg"></div>
+    <button class="go" id="brSave" type="button">Save &amp; open app</button>
+    <button class="ghost" id="brSkip" type="button">Skip for now</button>
+  </div>
+</div>
+
+<!-- LOCKED / INFO -->
+<div class="card hide" id="locked">
+  <div class="om" id="lkI">⏳</div>
+  <h1 id="lkT">Access needed</h1>
+  <p class="sub" id="lkS"></p>
+  <a class="wa" id="lkWa" target="_blank" rel="noopener">💬 Message on WhatsApp</a>
+  <button class="go" id="lkRetry" type="button" style="margin-top:12px">Try again</button>
+  <button class="lnk" id="lkOut" type="button">Sign out</button>
+</div>
+
+<div class="load" id="load"><div class="orb"><span>🪐</span></div><b id="loadB">UNLOCKING YOUR SKY</b><small id="loadT">Checking your access…</small></div>
+
+<script>
+(function(){
+  var SB='https://pbnfpbugxcndmrgpuved.supabase.co', KEY='sb_publishable_dpTL2lYOd1qirgYXR2P-9Q_WK18oZIV', SK='vax_sb_session';
+  var FN=SB+'/functions/v1/';
+  var $=function(i){return document.getElementById(i)}, mode='in', sess=null, S={price_paise:99900,validity_days:365,currency:'INR',product_name:'Vedic Astro Suite',whatsapp:'',allow_signup:true};
+  try{ sess=JSON.parse(localStorage.getItem(SK)||'null'); }catch(e){}
+  var wantBrand=/[?&]brand\b/.test(location.search);
+  if(/[#&]c=/.test(location.hash)) $('shared').classList.remove('hide');
+
+  /* ---------- helpers ---------- */
+  function save(s){ sess=s; try{ s?localStorage.setItem(SK,JSON.stringify(s)):localStorage.removeItem(SK); }catch(e){} }
+  function norm(j){ if(!j||!j.access_token) return null; return {access_token:j.access_token,refresh_token:j.refresh_token,expires_at:j.expires_at||Math.floor(Date.now()/1000)+(j.expires_in||3600),email:(j.user&&j.user.email)||(sess&&sess.email)||'',uid:(j.user&&j.user.id)||(sess&&sess.uid)||''}; }
+  function http(url,opt){ return fetch(url,opt).then(function(r){ return r.json().catch(function(){return {}}).then(function(j){ if(!r.ok){ var e=new Error(j.error_description||j.msg||j.message||j.error||('HTTP '+r.status)); e.status=r.status; e.body=j; throw e; } return j; }); }); }
+  function api(path,body,tok){ return http(SB+path,{method:'POST',headers:{apikey:KEY,'Content-Type':'application/json',Authorization:'Bearer '+(tok||KEY)},body:JSON.stringify(body||{})}); }
+  function fresh(){
+    if(!sess) return Promise.reject(new Error('noauth'));
+    if(sess.expires_at*1000-Date.now()>60000) return Promise.resolve(sess.access_token);
+    return api('/auth/v1/token?grant_type=refresh_token',{refresh_token:sess.refresh_token}).then(function(j){ save(norm(j)); return sess.access_token; });
+  }
+  function msg(id,t,ok){ var m=$(id); m.textContent=t||''; m.className='msg'+(ok?' ok':'')+(t?'':' hide'); }
+  function show(id){ ['login','pay','brand','locked'].forEach(function(x){ $(x).classList.toggle('hide',x!==id); }); $('load').classList.remove('show'); window.scrollTo(0,0); }
+  function loader(a,b){ $('loadB').textContent=a||'UNLOCKING YOUR SKY'; $('loadT').textContent=b||''; $('load').classList.add('show'); }
+  function wa(text){ var n=String(S.whatsapp||'').replace(/\D/g,''); return n?'https://wa.me/'+n+'?text='+encodeURIComponent(text):''; }
+  function rupees(p){ return '₹'+(p/100).toLocaleString('en-IN',{maximumFractionDigits:2}); }
+  function nice(e){ var m=String(e.message||e); if(/invalid login/i.test(m)) return 'Wrong email or password.'; if(/already|registered/i.test(m)) return 'This email already has an account. Try signing in.'; if(/email not confirmed/i.test(m)) return 'Please confirm your email first (check your inbox).'; if(/rate|too many/i.test(m)) return 'Too many tries. Please wait a minute.'; if(/Failed to fetch|NetworkError/i.test(m)) return 'No internet connection. Please try again.'; return m; }
+
+  /* ---------- settings (public) ---------- */
+  function applySettings(){
+    document.querySelectorAll('.pname').forEach(function(n){ n.textContent=String(S.product_name||'Vedic Astro Suite').toUpperCase(); });
+    document.title=S.product_name||'Vedic Astro Suite';
+    $('priceBox').firstChild.nodeValue=rupees(S.price_paise);
+    var d=S.validity_days; $('priceSub').textContent=d>=365?('for '+(d%365===0?(d/365===1?'1 year':(d/365)+' years'):d+' days')):('for '+d+' days');
+    if(S.allow_signup===false){ $('tUp').classList.add('hide'); $('tIn').parentNode.style.gridTemplateColumns='1fr'; $('legalNote').classList.add('hide'); }
+  }
+  var settingsP=api('/rest/v1/rpc/public_settings',{}).then(function(j){ if(j&&typeof j==='object') for(var k in j) S[k]=j[k]; applySettings(); }).catch(function(){ applySettings(); });
+
+  /* ---------- login ---------- */
+  function setMode(m){ mode=m; $('tIn').classList.toggle('on',m==='in'); $('tUp').classList.toggle('on',m==='up'); $('go').textContent=m==='in'?'Sign in':'Create account'; $('pw').autocomplete=m==='in'?'current-password':'new-password'; $('legalNote').style.display=m==='up'?'':'none'; msg('msg',''); }
+  $('tIn').onclick=function(){setMode('in')}; $('tUp').onclick=function(){setMode('up')}; setMode('in');
+  $('f').addEventListener('submit',function(e){
+    e.preventDefault(); var em=$('em').value.trim(), pw=$('pw').value;
+    if(!/^\S+@\S+\.\S+$/.test(em)) return msg('msg','Please enter a valid email.'); if(pw.length<6) return msg('msg','Password must be at least 6 characters.');
+    var go=$('go'), old=go.textContent; go.disabled=true; go.textContent='Please wait…'; msg('msg','');
+    var p=mode==='in'?api('/auth/v1/token?grant_type=password',{email:em,password:pw}):api('/auth/v1/signup',{email:em,password:pw});
+    p.then(function(j){ go.disabled=false; go.textContent=old; if(j&&j.access_token){ save(norm(j)); enter(); } else { msg('msg','Account created! Check your email to confirm, then sign in.',true); setMode('in'); msg('msg','Account created! Check your email to confirm, then sign in.',true); } })
+     .catch(function(er){ msg('msg',nice(er)); go.disabled=false; go.textContent=old; });
+  });
+  $('forgot').onclick=function(){ var em=$('em').value.trim(); if(!/^\S+@\S+\.\S+$/.test(em)) return msg('msg','Type your email above first, then tap Forgot password.'); api('/auth/v1/recover',{email:em}).then(function(){ msg('msg','Reset link sent. Check your email.',true); }).catch(function(er){ msg('msg',nice(er)); }); };
+  function out(){ save(null); show('login'); }
+  $('payOut').onclick=out; $('lkOut').onclick=out;
+
+  /* ---------- enter the app (server decides) ---------- */
+  function enter(){
+    loader('UNLOCKING YOUR SKY','Checking your access…');
+    settingsP.then(fresh).then(function(tok){
+      return fetch(FN+'get-app',{headers:{apikey:KEY,Authorization:'Bearer '+tok}}).then(function(r){
+        if(r.ok) return r.text().then(function(html){ loader('UNLOCKING YOUR SKY','Opening your sky…'); document.open(); document.write(html); document.close(); });
+        return r.json().catch(function(){return {}}).then(function(j){ if(r.status===401){ out(); return; } gate(j.reason||'unavailable'); });
+      });
+    }).catch(function(e){ if(e&&e.message==='noauth'||e&&e.status===400||e&&e.status===401){ out(); } else gate('offline'); });
+  }
+  function lock(icon,title,text,opts){
+    opts=opts||{}; $('lkI').textContent=icon; $('lkT').textContent=title; $('lkS').textContent=text;
+    var link=wa('Hi, I need help with my account. Email: '+(sess&&sess.email||'')); $('lkWa').href=link||'#'; $('lkWa').classList.toggle('hide',!link||!!opts.noWa);
+    $('lkRetry').classList.toggle('hide',!opts.retry); show('locked');
+  }
+  function gate(reason){
+    if(reason==='not_paid'||reason==='expired') return showPay(reason);
+    if(reason==='blocked') return lock('⛔','Access paused','Your access has been paused. Please message us and we will sort it out.');
+    if(reason==='no_record') return lock('🔎','Account not found','We could not find your membership yet. Please sign out and in again, or message us.');
+    if(reason==='offline') return lock('📡','Can’t reach the server','Check your internet connection and try again.',{retry:true,noWa:true});
+    lock('🛠️','Updating the app','The app is being updated. Please try again in a minute.',{retry:true,noWa:true});
+  }
+  $('lkRetry').onclick=enter;
+
+  /* ---------- pay ---------- */
+  var rzP=null;
+  function loadRzp(){ if(window.Razorpay) return Promise.resolve(); if(rzP) return rzP; rzP=new Promise(function(res,rej){ var s=document.createElement('script'); s.src='https://checkout.razorpay.com/v1/checkout.js'; s.onload=res; s.onerror=function(){ rzP=null; rej(new Error('Could not load the payment window. Check your internet.')); }; document.head.appendChild(s); }); return rzP; }
+  function showPay(reason){
+    $('payWhy').textContent=reason==='expired'?'Your access has ended. Renew to continue.':'Unlock the full suite for your practice.';
+    $('payBtn').textContent=(reason==='expired'?'Renew for ':'Pay ')+rupees(S.price_paise); $('payBtn').disabled=false; msg('payMsg','');
+    var link=wa('Hi, I need help with payment. Email: '+(sess&&sess.email||'')); $('payWa').href=link||'#'; $('payWa').classList.toggle('hide',!link);
+    show('pay');
+  }
+  $('payBtn').onclick=function(){
+    var b=$('payBtn'); b.disabled=true; msg('payMsg','');
+    fresh().then(function(tok){
+      return http(FN+'create-order',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:'{}'}).then(function(o){
+        return loadRzp().then(function(){
+          var rz=new window.Razorpay({key:o.key_id,amount:o.amount,currency:o.currency,order_id:o.order_id,name:S.product_name||'Vedic Astro Suite',description:'Access for '+$('priceSub').textContent.replace('for ',''),prefill:{email:o.email||(sess&&sess.email)||''},theme:{color:'#d4af37'},
+            handler:function(r){ confirmPay(r); },
+            modal:{ondismiss:function(){ b.disabled=false; }}});
+          rz.on('payment.failed',function(r){ msg('payMsg',(r&&r.error&&r.error.description)||'Payment failed. You were not charged. Please try again.'); b.disabled=false; });
+          rz.open();
+        });
+      });
+    }).catch(function(e){
+      b.disabled=false; var c=e&&e.body&&e.body.error;
+      if(c==='payments_not_configured') return msg('payMsg','Payments are being set up. Please message us on WhatsApp.');
+      if(c==='already_lifetime') return enter();
+      if(c==='blocked') return gate('blocked');
+      if(e&&e.status===401) return out();
+      msg('payMsg',nice(e));
+    });
+  };
+  function confirmPay(r){
+    loader('CONFIRMING PAYMENT','Please do not close this page…');
+    fresh().then(function(tok){ return http(FN+'verify-payment',{method:'POST',headers:{apikey:KEY,Authorization:'Bearer '+tok,'Content-Type':'application/json'},body:JSON.stringify({razorpay_order_id:r.razorpay_order_id,razorpay_payment_id:r.razorpay_payment_id,razorpay_signature:r.razorpay_signature})}); })
+    .then(function(){ firstBrand=true; showBrand(); })
+    .catch(function(){ pollEnter(0); });
+  }
+  function pollEnter(n){ /* payment went through at Razorpay but our confirm failed: the webhook will activate us shortly */
+    loader('CONFIRMING PAYMENT','Almost done… ('+(n+1)+')');
+    fresh().then(function(tok){ return fetch(FN+'get-app',{headers:{apikey:KEY,Authorization:'Bearer '+tok}}); }).then(function(r){
+      if(r.ok) return enter();
+      if(n>=8) return lock('✅','Payment received','Your payment is being confirmed. This can take a minute. Tap Try again, or message us if it takes longer.',{retry:true});
+      setTimeout(function(){ pollEnter(n+1); },3000);
+    }).catch(function(){ if(n<8) setTimeout(function(){ pollEnter(n+1); },3000); else gate('offline'); });
+  }
+
+  /* ---------- brand editor ---------- */
+  var SW=['#d4a24a','#e0584b','#3aa0ff','#2fbf9a','#9b6bff','#e8639b'], br={name:'',tag:'',phone:'',accent:'#d4a24a',logo:'',locked:false}, firstBrand=false;
+  function drawSw(){ var h=''; SW.forEach(function(c){ h+='<button type="button" data-c="'+c+'" style="background:'+c+'" class="'+(br.accent.toLowerCase()===c?'on':'')+'" aria-label="'+c+'"></button>'; }); h+='<input type="color" id="bCol" value="'+br.accent+'" aria-label="Custom colour">'; $('bSw').innerHTML=h; }
+  function prev(){
+    $('pvName').textContent=br.name||'Your name'; $('prev').style.borderColor=br.accent+'99';
+    var l=$('pvLogo'); if(br.logo){ l.style.background='url('+br.logo+') center/cover'; } else { l.style.background=br.accent; }
+    $('bPh').style.backgroundImage=br.logo?'url('+br.logo+')':''; $('bPh').textContent=br.logo?'':'🖼';
+  }
+  function lockForm(on){ ['bName','bTag','bPhone','bPick','bClr','brSave'].forEach(function(i){ $(i).disabled=on; }); }
+  function showBrand(){
+    loader('YOUR BRAND','Loading…');
+    fresh().then(function(tok){
+      return http(SB+'/rest/v1/brand_profiles?select=*',{headers:{apikey:KEY,Authorization:'Bearer '+tok}}).catch(function(){return []});
+    }).then(function(rows){
+      var r=(rows&&rows[0])||{}; br={name:r.brand_name||'',tag:r.tagline||'',phone:r.phone||'',accent:r.accent||'#d4a24a',logo:r.logo||'',locked:!!r.locked};
+      $('bName').value=br.name; $('bTag').value=br.tag; $('bPhone').value=br.phone; drawSw(); prev(); msg('brMsg','');
+      lockForm(br.locked);
+      if(br.locked){ msg('brMsg','Your brand is managed by the admin and can’t be changed here.'); }
+      $('brSave').textContent=br.locked?'Open app':'Save & open app'; if(br.locked) $('brSave').disabled=false;
+      $('brSub').textContent=firstBrand?'Payment successful! 🎉 Make the app yours — you can change this any time.':'This appears on your reports and inside the app.';
+      $('brSkip').textContent=firstBrand?'Skip for now':'Back to app';
+      show('brand');
+    }).catch(function(){ enter(); });
+  }
+  $('bName').oninput=function(){ br.name=this.value; prev(); };
+  $('bTag').oninput=function(){ br.tag=this.value; };
+  $('bPhone').oninput=function(){ br.phone=this.value; };
+  $('bSw').addEventListener('click',function(e){ var c=e.target.getAttribute&&e.target.getAttribute('data-c'); if(c&&!br.locked){ br.accent=c; drawSw(); prev(); } });
+  $('bSw').addEventListener('input',function(e){ if(e.target.id==='bCol'&&!br.locked){ br.accent=e.target.value; var bs=$('bSw').querySelectorAll('button'); for(var i=0;i<bs.length;i++) bs[i].classList.remove('on'); prev(); } });
+  $('bPick').onclick=function(){ $('bFile').click(); };
+  $('bClr').onclick=function(){ br.logo=''; prev(); };
+  $('bFile').onchange=function(){
+    var f=this.files&&this.files[0]; this.value=''; if(!f) return;
+    if(!/^image\/(png|jpeg|webp)$/.test(f.type)) return msg('brMsg','Please choose a PNG, JPG or WebP image.');
+    var img=new Image(), url=URL.createObjectURL(f);
+    img.onload=function(){
+      var s=Math.min(img.width,img.height), c=document.createElement('canvas'); c.width=c.height=160;
+      c.getContext('2d').drawImage(img,(img.width-s)/2,(img.height-s)/2,s,s,0,0,160,160); URL.revokeObjectURL(url);
+      var d=c.toDataURL('image/webp',.85); if(!/^data:image\/(webp|png|jpeg)/.test(d)) d=c.toDataURL('image/png');
+      if(d.length>150000) d=c.toDataURL('image/jpeg',.8);
+      br.logo=d; msg('brMsg',''); prev();
+    };
+    img.onerror=function(){ msg('brMsg','Could not read that image.'); };
+    img.src=url;
+  };
+  $('brSave').onclick=function(){
+    if(br.locked) return enter();
+    var b=$('brSave'); b.disabled=true; b.textContent='Saving…'; msg('brMsg','');
+    fresh().then(function(tok){ return api('/rest/v1/rpc/save_my_brand',{p_name:br.name,p_tagline:br.tag,p_phone:br.phone,p_accent:br.accent,p_logo:br.logo},tok); })
+    .then(function(){ history.replaceState(null,'',location.pathname+location.hash); enter(); })
+    .catch(function(e){ b.disabled=false; b.textContent='Save & open app'; var m=String(e.message||''); msg('brMsg',/locked/.test(m)?'Your brand is managed by the admin.':/inactive/.test(m)?'Your access is not active.':/logo/.test(m)?'That logo is too large. Try a smaller image.':nice(e)); });
+  };
+  $('brSkip').onclick=function(){ history.replaceState(null,'',location.pathname+location.hash); enter(); };
+
+  /* ---------- start ---------- */
+  if(sess&&sess.refresh_token){ if(wantBrand){ showBrand(); } else enter(); }
+})();
+</script>
+</body></html>

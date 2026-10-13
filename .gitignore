@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+customer-edition.html
+.DS_Store
