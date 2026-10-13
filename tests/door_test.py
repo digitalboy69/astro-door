@@ -2,7 +2,7 @@
 import os, json
 from playwright.sync_api import sync_playwright
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-PAGE = 'file://' + os.path.join(ROOT, 'site', 'index.html')
+PAGE = 'file://' + os.path.join(ROOT, 'index.html')
 st = {'paid': False, 'blocked': False, 'brand_saved': None, 'verify_fail': False, 'orders': 0}
 J = lambda r, o, s=200: r.fulfill(status=s, content_type='application/json', headers={'access-control-allow-origin': '*'}, body=json.dumps(o))
 def sb(r):
